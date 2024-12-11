@@ -87,7 +87,6 @@
                     </div>
             </section>
 
-            <!-- Gestión de Cultivos -->
             <section id="crop-management" class="col-md-6 mb-4">
                 <div class="card">
                     <div class="card-header bg-success text-white">
@@ -98,10 +97,15 @@
                         <form id="add-crop-form" class="d-flex flex-column">
                             <input type="text" id="crop-name" class="form-control mb-2" placeholder="Nombre del Cultivo" required>
                             <input type="text" id="crop-type" class="form-control mb-2" placeholder="Tipo" required>
-                            <input type="text" id="crop-cycle" class="form-control mb-2" placeholder="Ciclo en dias" required>
+                            <input type="text" id="crop-cycle" class="form-control mb-2" placeholder="Ciclo en días" required>
                             <button type="submit" class="btn btn-success">Agregar</button>
                         </form>
                     </div>
+                </div>
+                 <!-- Menú contextual para modificar o eliminar cultivos -->
+                 <div id="context-menuc" class="context-menu">
+                    <button id="edit-cul" class="btn btn-warning btn-sm">Modificar</button>
+                    <button id="delete-cul" class="btn btn-danger btn-sm">Eliminar</button>
                 </div>
             </section>
 
@@ -127,6 +131,10 @@
                             </div>
                             <div class="col-12 text-end">
                                 <button type="submit" class="btn btn-success">Planificar</button>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="harvest-date" class="form-label">Fecha de cosecha</label>
+                                <input type="text" id="harvest-date" class="form-control" readonly>
                             </div>
                         </form>
                     </div>
@@ -200,9 +208,27 @@
         </div>
     </footer>
     <!-- fin de pie-->
+    <script>
+         document.getElementById('planting-form').addEventListener('submit', function(e) {
+        
+            // Obtener los valores del formulario
+            const plantingDate = document.getElementById('planting-date').value;
+            const cycleDays = parseInt(document.getElementById('crop-cycle').value);
+        
+            // Calcular la fecha de cosecha
+            const plantingDateObj = new Date(plantingDate);
+            plantingDateObj.setDate(plantingDateObj.getDate() + cycleDays);
+        
+            // Formatear la fecha de cosecha en formato YYYY-MM-DD
+            const harvestDate = plantingDateObj.toISOString().split('T')[0];
+        
+            // Mostrar la fecha de cosecha en el campo correspondiente
+            document.getElementById('harvest-date').value = harvestDate;
+        });
 
+    </script>
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="calendario.js"></script>
+    <script src="Script.js"></script>
 </body>
 </html>

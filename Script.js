@@ -3,10 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const cropList = document.getElementById("crop-list");
     const cropSelect = document.getElementById("crop-select");
     const contextMenu = document.getElementById("context-menu");
+    const contextMenuCrop = document.getElementById("context-menuc");
 
     let events = JSON.parse(localStorage.getItem('events')) || [];
     let crops = JSON.parse(localStorage.getItem('crops')) || [];
     let selectedEvent = null;
+    let selectedCrop = null;
 
     const currentDate = new Date();
     let currentMonth = currentDate.getMonth();
@@ -29,12 +31,26 @@ document.addEventListener("DOMContentLoaded", () => {
             const event = events.find(e => e.date === `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`);
             if (event) {
                 dayCell.classList.add("event-day");
-                dayCell.title = `Planificacion de siembra de ${event.crop} en un area de (${event.area} hectareas (ha))`;
+                dayCell.title = `Planificación de siembra de ${event.crop} en un área de (${event.area} hectáreas (ha))`;
                 dayCell.addEventListener("contextmenu", (e) => {
                     e.preventDefault();
                     selectedEvent = event;
                     showContextMenu(e.pageX, e.pageY);
                 });
+
+                // Calcular la fecha de recolección
+                const plantingDateObj = new Date(event.date);
+                plantingDateObj.setDate(plantingDateObj.getDate() + parseInt(event.cycle));
+                const harvestDateString = plantingDateObj.toISOString().split('T')[0];
+                const harvestDateParts = harvestDateString.split('-');
+                const harvestYear = parseInt(harvestDateParts[0]);
+                const harvestMonth = parseInt(harvestDateParts[1]) - 1;
+                const harvestDay = parseInt(harvestDateParts[2]);
+
+                if (harvestYear === currentYear && harvestMonth === currentMonth && harvestDay === day) {
+                    dayCell.classList.add("harvest-day");
+                    dayCell.title += `\nRecolección de ${event.crop}`;
+                }
             }
 
             calendar.appendChild(dayCell);
@@ -50,7 +66,15 @@ document.addEventListener("DOMContentLoaded", () => {
         crops.forEach(crop => {
             const li = document.createElement('li');
             li.classList.add('list-group-item');
-            li.textContent = `${crop.name} - ${crop.type} - ${crop.cycle}`;
+            li.textContent = `${crop.name} - ${crop.type} - ${crop.cycle} días`;
+
+            // Agregar evento de clic derecho
+            li.addEventListener("contextmenu", (e) => {
+                e.preventDefault();
+                selectedCrop = crop;
+                showCropContextMenu(e.pageX, e.pageY);
+            });
+
             cropList.appendChild(li);
 
             const option = document.createElement('option');
@@ -80,6 +104,21 @@ document.addEventListener("DOMContentLoaded", () => {
         hideContextMenu();
     }
 
+    function deleteCrop() {
+        crops = crops.filter(crop => crop !== selectedCrop);
+        saveData();
+        renderCrops();
+        hideCropContextMenu();
+    }
+
+    function editCrop() {
+        document.getElementById("crop-name").value = selectedCrop.name;
+        document.getElementById("crop-type").value = selectedCrop.type;
+        document.getElementById("crop-cycle").value = selectedCrop.cycle;
+        deleteCrop();
+        hideCropContextMenu();
+    }
+
     function showContextMenu(x, y) {
         contextMenu.style.top = `${y}px`;
         contextMenu.style.left = `${x}px`;
@@ -88,6 +127,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function hideContextMenu() {
         contextMenu.classList.remove("active");
+    }
+
+    function showCropContextMenu(x, y) {
+        contextMenuCrop.style.top = `${y}px`;
+        contextMenuCrop.style.left = `${x}px`;
+        contextMenuCrop.classList.add("active");
+    }
+
+    function hideCropContextMenu() {
+        contextMenuCrop.classList.remove("active");
     }
 
     document.getElementById("prev-month").addEventListener("click", () => {
@@ -146,10 +195,12 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        const selectedCrop = crops.find(c => c.name === crop);
         events.push({
             crop,
             area,
-            date: `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+            date: `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`,
+            cycle: selectedCrop.cycle
         });
         saveData();
         renderCalendar();
@@ -159,10 +210,15 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!contextMenu.contains(e.target)) {
             hideContextMenu();
         }
+        if (!contextMenuCrop.contains(e.target)) {
+            hideCropContextMenu();
+        }
     });
 
     document.getElementById("delete-event").addEventListener("click", deleteEvent);
     document.getElementById("edit-event").addEventListener("click", editEvent);
+    document.getElementById("delete-cul").addEventListener("click", deleteCrop);
+    document.getElementById("edit-cul").addEventListener("click", editCrop);
 
     // Cargar datos desde localStorage y renderizar
     renderCrops();

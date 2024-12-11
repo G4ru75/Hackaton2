@@ -12,12 +12,19 @@
     cursor: pointer;
     border-radius: 5px;
     background-color: white;
-    color: black; /* Asegura que el texto sea visible */
+    color: black; 
 }
 
 #calendar div.event-day {
     background-color: #ffc107;
-    color: white; /* Color del texto para los días con eventos */
+    color: white; 
+    font-weight: bold;
+    position: relative;
+}
+
+#calendar div.harvest-day {
+    background-color: #28a745; 
+    color: white; 
     font-weight: bold;
     position: relative;
 }
