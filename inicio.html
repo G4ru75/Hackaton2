@@ -8,23 +8,24 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-light">
-    <header class="bg-success text-white text-center py-3">
-        <h1>Planificador de Cultivos Interactivo</h1>
-    </header>
-     <!-- inicio encabezado-->
-     <nav class="navbar navbar-expand-lg bg-dark navbar-light" id="templatemo_nav_top">
+<body>
+       <!-- inicio encabezado-->
+    <nav class="navbar navbar-expand-lg bg-dark navbar-light" id="templatemo_nav_top">
         <div class="container text-light">
             <div class="w-100 d-flex justify-content-between">
                 <div>
                     <i class="fa fa-envelope mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="motilonesshop@gmail.com">losheimistech@gmail.com</a>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="losheimistech@gmail.com">losheimistech@gmail.com</a>
                     <i class="fa fa-phone mx-2"></i>
                     <a class="navbar-sm-brand text-light text-decoration-none" href="tel: 057-320-202-02-02">057-320-202-02-02</a>
                 </div>
             </div>
         </div>
     </nav>
+    <!-- fin encabezado-->
+    <header class="bg-success text-white text-center py-3">
+        <h1>Planificador de Cultivos</h1>
+    </header>
     <!-- inicio menu-->
          <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-light shadow">
@@ -42,10 +43,10 @@
                             <a class="nav-link" href="inicio.html">A cerca de</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#col-md-6 ">Funcionalidades</a>
+                            <a class="nav-link" href="index.html">Funcionalidades</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#planting-form-section">Planificar</a>
+                            <a class="nav-link" href="index.html">Planificar</a>
                         </li>
                     </ul>
                 </div>
@@ -58,85 +59,75 @@
                             </div>
                         </div>
                     </div>
+                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="compras.html">
+                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                        <span id="carrito-value" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                        <span id="contador" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                    </a>
                 </div>
             </div>
         </div>
     </nav>
 <!-- fin menu-->
     <main class="container my-4">
-        <div class="row">
-            <!-- Calendario -->
-            <section id="calendar-section" class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-header bg-success text-white">
-                        <h2 class="h5 mb-0">Calendario</h2>
-                    </div>
-                    <div class="card-body">
-                        <div id="calendar-controls" class="d-flex justify-content-between mb-3">
-                            <button id="prev-month" class="btn btn-outline-success btn-sm">← Mes Anterior</button>
-                            <span id="current-month" class="fw-bold">Diciembre 2024</span>
-                            <button id="next-month" class="btn btn-outline-success btn-sm">Mes Siguiente →</button>
+        <!-- Sección Acerca de -->
+        <section id="about" class="mb-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="Agricultura.jpg" alt="Agricultura" class="img-fluid">
+                </div>
+                <div class="col-md-6">
+                    <h2>Acerca de</h2>
+                    <p>
+                        Nuestro Planificador de Cultivos es una herramienta innovadora diseñada para facilitar la gestión agrícola. Con una interfaz amigable y funcionalidades avanzadas, nuestro objetivo es ayudar a los agricultores a maximizar sus cosechas y gestionar sus recursos de manera eficiente.
+                    </p>
+                    <p>
+                        Desde la selección del cultivo adecuado hasta la planificación de las fechas de siembra y cosecha, nuestra plataforma ofrece todo lo que necesitas para optimizar tus actividades agrícolas.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Funcionalidades -->
+        <section id="features" class="mb-4">
+            <h2>Funcionalidades</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Gestión de Cultivos</h3>
+                            <p class="card-text">Organiza y gestiona tus cultivos de manera eficiente, desde la siembra hasta la cosecha.</p>
                         </div>
-                        <div id="calendar" class="d-grid grid-template-columns-7 gap-2"></div>
                     </div>
                 </div>
-                <!-- botones para modificar y eliminar -->
-                    <div id="context-menu" class="context-menu">
-                        <button id="edit-event" class="btn btn-warning btn-sm">Modificar</button>
-                        <button id="delete-event" class="btn btn-danger btn-sm">Eliminar</button>
-                    </div>
-            </section>
-
-            <!-- Gestión de Cultivos -->
-            <section id="crop-management" class="col-md-6 mb-4">
-                <div class="card">
-                    <div class="card-header bg-success text-white">
-                        <h2 class="h5 mb-0">Gestión de Cultivos</h2>
-                    </div>
-                    <div class="card-body">
-                        <ul id="crop-list" class="list-group mb-3"></ul>
-                        <form id="add-crop-form" class="d-flex flex-column">
-                            <input type="text" id="crop-name" class="form-control mb-2" placeholder="Nombre del Cultivo" required>
-                            <input type="text" id="crop-type" class="form-control mb-2" placeholder="Tipo" required>
-                            <input type="text" id="crop-cycle" class="form-control mb-2" placeholder="Ciclo en dias" required>
-                            <button type="submit" class="btn btn-success">Agregar</button>
-                        </form>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Calendario Interactivo</h3>
+                            <p class="card-text">Planifica las fechas clave de siembra y cosecha con nuestro calendario interactivo.</p>
+                        </div>
                     </div>
                 </div>
-            </section>
-
-            <!-- Planificar Siembra -->
-            <section id="planting-form-section" class="col-12">
-                <div class="card">
-                    <div class="card-header bg-success text-white">
-                        <h2 class="h5 mb-0">Planificar Siembra</h2>
-                    </div>
-                    <div class="card-body">
-                        <form id="planting-form" class="row g-3">
-                            <div class="col-md-4">
-                                <label for="crop-select" class="form-label">Seleccionar Cultivo</label>
-                                <select id="crop-select" class="form-select"></select>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="area" class="form-label">Área (hectáreas)</label>
-                                <input type="number" id="area" class="form-control" required min="1">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="planting-date" class="form-label">Fecha</label>
-                                <input type="date" id="planting-date" class="form-control" required>
-                            </div>
-                            <div class="col-12 text-end">
-                                <button type="submit" class="btn btn-success">Planificar</button>
-                            </div>
-                        </form>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Análisis de Datos</h3>
+                            <p class="card-text">Obtén informes detallados y análisis para tomar decisiones informadas sobre tus cultivos.</p>
+                        </div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
     </main>
-
-     <!-- inicio de pie-->
-     <footer class="bg-dark" id="templatemo_footer">
+   
+    <!-- inicio de pie-->
+    <footer class="bg-dark" id="templatemo_footer">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 pt-5">
@@ -161,8 +152,8 @@
                     <h2 class="h2 text-light border-bottom pb-3 border-light">Mas información</h2>
                     <ul class="list-unstyled text-light footer-link-list">
                         <li><a class="text-decoration-none" href="inicio.html">A cerca de</a></li>
-                        <li><a class="text-decoration-none" href="#calendar-section">Funcionalidades</a></li>
-                        <li><a class="text-decoration-none" href="#planting-form-section">Planificar</a></li>
+                        <li><a class="text-decoration-none" href="index.html">Funcionalidades</a></li>
+                        <li><a class="text-decoration-none" href="index.html">Planificar</a></li>
                 </div>
             </div>
 
@@ -188,6 +179,7 @@
                 </div>
             </div>
 
+
         </div>
         <div class="w-100 bg-black py-3">
             <div class="container">
@@ -200,9 +192,8 @@
         </div>
     </footer>
     <!-- fin de pie-->
-
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="calendario.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

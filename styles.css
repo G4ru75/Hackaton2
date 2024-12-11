@@ -7,17 +7,47 @@
 
 #calendar div {
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #000000;
     text-align: center;
     cursor: pointer;
     border-radius: 5px;
     background-color: white;
+    color: black; /* Asegura que el texto sea visible */
 }
 
-#calendar div.event {
+#calendar div.event-day {
     background-color: #ffc107;
-    color: white;
+    color: white; /* Color del texto para los días con eventos */
     font-weight: bold;
+    position: relative;
+}
+
+.context-menu {
+    position: absolute;
+    display: none;
+    background-color: white;
+    border: 1px solid #000000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.context-menu.active {
+    display: block;
+}
+
+.context-menu button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    color: black;
+}
+
+.context-menu button:hover {
+    background-color: #f0f0f0;
 }
 
 /* Agregar sombra a las tarjetas */
