@@ -1,46 +1,17 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
-    color: #333;
-}
-
-header {
-    background-color: #28a745;
-    color: white;
-    padding: 1rem;
-    text-align: center;
-}
-
-main {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 1rem;
-}
-
-section {
-    flex: 1;
-    min-width: 300px;
-    margin: 1rem;
-    background: white;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-}
-
+/* Ajuste para el calendario con una grilla */
 #calendar {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
+    gap: 0.5rem;
 }
 
 #calendar div {
     padding: 10px;
-    text-align: center;
     border: 1px solid #ddd;
+    text-align: center;
     cursor: pointer;
+    border-radius: 5px;
+    background-color: white;
 }
 
 #calendar div.event {
@@ -49,21 +20,14 @@ section {
     font-weight: bold;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+/* Agregar sombra a las tarjetas */
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 0.5rem;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-button:hover {
-    background-color: #218838;
+/* Ajuste de márgenes en dispositivos pequeños */
+@media (max-width: 768px) {
+    #calendar {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
